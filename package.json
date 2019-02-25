@@ -1,0 +1,34 @@
+{
+  "name": "use-it",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && tap --coverage test/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eomm/use-it.git"
+  },
+  "keywords": [
+    "resource",
+    "pattern",
+    "manager",
+    "criteria",
+    "choose",
+    "pool"
+  ],
+  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Eomm/use-it/issues"
+  },
+  "homepage": "https://github.com/Eomm/use-it#readme",
+  "devDependencies": {
+    "standard": "^12.0.1",
+    "tap": "^12.5.3"
+  },
+  "dependencies": {
+    "buckets-js": "^1.98.2"
+  }
+}
