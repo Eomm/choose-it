@@ -29,6 +29,6 @@
     "tap": "^12.5.3"
   },
   "dependencies": {
-    "buckets-js": "^1.98.2"
+    "archy": "^1.0.0"
   }
 }
