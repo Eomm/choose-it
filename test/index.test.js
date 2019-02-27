@@ -1,7 +1,7 @@
 'use strict'
 
 const t = require('tap')
-const UseIt = require('../')
+const ChooseIt = require('../')
 const h = require('./helper')
 const test = t.test
 
@@ -9,13 +9,13 @@ test('new UseIt error', t => {
   t.plan(4);
 
   [null, undefined, 'str', 42].forEach(e => {
-    t.throws(() => UseIt(e), 'new UseIt must accept only functions')
+    t.throws(() => ChooseIt(e), 'new UseIt must accept only functions')
   })
 })
 
 test('addCriteria return a new node', t => {
   t.plan(1)
-  const use = new UseIt()
+  const use = new ChooseIt()
   const newNode = use.addCriteria(() => true)
 
   t.notOk(Object.is(use, newNode), 'addCriteria must return a new node')
@@ -23,7 +23,7 @@ test('addCriteria return a new node', t => {
 
 test('addCriteria chain', t => {
   t.plan(3)
-  const use = new UseIt()
+  const use = new ChooseIt()
   use.addCriteria(() => true)
     .addCriteria(() => true)
     .addCriteria(() => true)
@@ -38,7 +38,7 @@ test('addCriteria error', t => {
 
   [null, undefined, 'str', 42].forEach(e => {
     t.throws(() => {
-      const use = new UseIt()
+      const use = new ChooseIt()
       use.addCriteria(e)
     }, 'addCriteria must accept only functions')
   })
@@ -46,7 +46,7 @@ test('addCriteria error', t => {
 
 test('addSiblingCriteria return a new node', t => {
   t.plan(1)
-  const use = new UseIt()
+  const use = new ChooseIt()
   const newNode = use
     .addCriteria(() => true)
     .addSiblingCriteria(() => true)
@@ -56,7 +56,7 @@ test('addSiblingCriteria return a new node', t => {
 
 test('addSiblingCriteria chain', t => {
   t.plan(4)
-  const use = new UseIt()
+  const use = new ChooseIt()
   use.addCriteria(() => true)
     .addSiblingCriteria(() => true)
     .addCriteria(() => true)
@@ -70,14 +70,14 @@ test('addSiblingCriteria chain', t => {
 test('addSiblingCriteria on root', t => {
   t.plan(1)
   t.throws(() => {
-    const use = new UseIt()
+    const use = new ChooseIt()
     use.addSiblingCriteria(() => true)
   })
 })
 
 test('toJSON must return a simple tree', t => {
   t.plan(1)
-  const tree = h.buildTestTree(new UseIt())
+  const tree = h.buildTestTree(new ChooseIt())
 
   const simpleTree = {
     criteria: /:*/,
@@ -117,7 +117,7 @@ test('toJSON must return a simple tree', t => {
 
 test('clear', t => {
   t.plan(4)
-  const use = new UseIt()
+  const use = new ChooseIt()
   const child = use.addCriteria(() => true)
 
   t.equals(use.children.length, 1)
@@ -132,7 +132,7 @@ test('clear', t => {
 test('evaluate with wrong algorithm settings', t => {
   t.plan(1)
   t.throws(() => {
-    const use = new UseIt()
+    const use = new ChooseIt()
     use.evaluate(1, { algorithm: 'NONE' })
   })
 })
@@ -140,7 +140,7 @@ test('evaluate with wrong algorithm settings', t => {
 test('prettyPrint', t => {
   t.plan(1)
   t.doesNotThrow(() => {
-    const tree = h.buildTestTree(new UseIt())
+    const tree = h.buildTestTree(new ChooseIt())
     tree.prettyPrint()
   })
 })

@@ -1,4 +1,4 @@
-# use-it
+# choose-it
 
 This module let you focus on the business logic instead of going crazy in a `if/else` jungle 🐵🌴
 
@@ -7,7 +7,7 @@ or simply some settings you need to use based on some logic of your company.
 
 In this case you have to write always the same `if` conditions to pick one of those resources.
 
-`use-it` will solve this problem!
+`choose-it` will solve this problem!
 
 ## Usage
 
@@ -27,8 +27,8 @@ const exampleConfig = {
 }
 
 
-const UseIt = require('use-it')
-const resouceChooser = new UseIt()
+const ChooseIt = require('choose-it')
+const resouceChooser = new ChooseIt()
 
 resouceChooser.addCriteria((item) => item.admin === true, exampleConfig.admin)
 

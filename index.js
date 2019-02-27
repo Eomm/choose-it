@@ -4,7 +4,7 @@ const archy = require('archy')
 
 function noop () { return true }
 
-function UseIt (fn = noop, resource) {
+function ChooseIt (fn = noop, resource) {
   if (typeof fn !== 'function') {
     throw new Error('fn parameter must be a function')
   }
@@ -15,31 +15,31 @@ function UseIt (fn = noop, resource) {
   this.criteria = fn
 }
 
-UseIt.prototype.addCriteria = function (fn, resource) {
+ChooseIt.prototype.addCriteria = function (fn, resource) {
   if (typeof fn !== 'function') {
     throw new Error('fn parameter must be a function')
   }
 
-  const node = new UseIt(fn, resource)
+  const node = new ChooseIt(fn, resource)
   node.parent = this
   this.children.push(node)
   return node
 }
 
-UseIt.prototype.addSiblingCriteria = function (fn, resource) {
+ChooseIt.prototype.addSiblingCriteria = function (fn, resource) {
   if (this.parent === undefined) {
     throw new Error('Cannot add sibling on root node')
   }
   return this.addCriteria.call(this.parent, fn, resource)
 }
 
-UseIt.prototype.clear = function () {
+ChooseIt.prototype.clear = function () {
   this.children.forEach(c => { c.parent = undefined })
   this.children = []
 }
 
 // don't need to remember visited nodes (you can only add node not connect ones)
-UseIt.prototype.depthFirstSearchPreOrder = function (item, opts = {}) {
+ChooseIt.prototype.depthFirstSearchPreOrder = function (item, opts = {}) {
   const resourceStack = []
   preOrder(this)
   return resourceStack
@@ -65,7 +65,7 @@ UseIt.prototype.depthFirstSearchPreOrder = function (item, opts = {}) {
   }
 }
 
-UseIt.prototype.depthFirstSearchPostOrder = function (item, opts = {}) {
+ChooseIt.prototype.depthFirstSearchPostOrder = function (item, opts = {}) {
   const resourceStack = []
   postOrder(this)
   return resourceStack
@@ -88,7 +88,7 @@ UseIt.prototype.depthFirstSearchPostOrder = function (item, opts = {}) {
   }
 }
 
-UseIt.prototype.depthFirstSearch = function (item, opts = {}) {
+ChooseIt.prototype.depthFirstSearch = function (item, opts = {}) {
   switch (opts.order) {
     case 'NLR':
       return this.depthFirstSearchPreOrder(item, opts)
@@ -101,7 +101,7 @@ UseIt.prototype.depthFirstSearch = function (item, opts = {}) {
   }
 }
 
-UseIt.prototype.breadthFirstSearch = function (item, opts = {}) {
+ChooseIt.prototype.breadthFirstSearch = function (item, opts = {}) {
   const resourceStack = []
   const queue = []
   queue.push(this)
@@ -126,7 +126,7 @@ UseIt.prototype.breadthFirstSearch = function (item, opts = {}) {
   return resourceStack
 }
 
-UseIt.prototype.evaluate = function (item, options) {
+ChooseIt.prototype.evaluate = function (item, options) {
   const opts = cleanOpts(options)
   switch (opts.algorithm) {
     case 'BFS':
@@ -138,7 +138,7 @@ UseIt.prototype.evaluate = function (item, options) {
   }
 }
 
-UseIt.prototype.toJSON = function () {
+ChooseIt.prototype.toJSON = function () {
   const toJSON = (target, node) => {
     target.criteria = node.criteria
     target.resource = node.resource
@@ -148,7 +148,7 @@ UseIt.prototype.toJSON = function () {
   return toJSON({}, this)
 }
 
-UseIt.prototype.prettyPrint = function (pretty) {
+ChooseIt.prototype.prettyPrint = function (pretty) {
   const getLabel = pretty || ((criteria, resource = '') => `${criteria.toString()} ${resource}`)
 
   const decorateText = (node) => {
@@ -168,4 +168,4 @@ function cleanOpts (opts) {
   }, opts)
 }
 
-module.exports = UseIt
+module.exports = ChooseIt
