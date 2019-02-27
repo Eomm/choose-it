@@ -1,5 +1,7 @@
 # choose-it
 
+[![Coverage Status](https://coveralls.io/repos/github/Eomm/choose-it/badge.svg?branch=master)](https://coveralls.io/github/Eomm/choose-it?branch=master)
+
 This module let you focus on the business logic instead of going crazy in a `if/else` jungle 🐵🌴
 
 An example use case is when you have a set of databases connections that are not configured as cluster,
@@ -67,6 +69,9 @@ Default options:
 ## Roadmap
 
 [] Docs
+
 [] Emit events `onAdd`, `onFind`, `onMax`, `onEnd`
+
 [] Manage Primise Criteria
+
 [] Performance

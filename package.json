@@ -1,14 +1,16 @@
 {
   "name": "choose-it",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Choose a resource in a 🌴 tree",
   "main": "index.js",
   "scripts": {
-    "test": "standard && tap --coverage test/**/*.test.js"
+    "test": "standard && tap --coverage test/**/*.test.js",
+    "coveralls": "tap --coverage-report=text-lcov | node ./node_modules/coveralls/bin/coveralls.js",
+    "coverage": "npm test && npm run coveralls"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eomm/use-it.git"
+    "url": "git+https://github.com/Eomm/choose-it.git"
   },
   "keywords": [
     "resource",
@@ -21,10 +23,11 @@
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Eomm/use-it/issues"
+    "url": "https://github.com/Eomm/choose-it/issues"
   },
-  "homepage": "https://github.com/Eomm/use-it#readme",
+  "homepage": "https://github.com/Eomm/choose-it#readme",
   "devDependencies": {
+    "coveralls": "^3.0.3",
     "standard": "^12.0.1",
     "tap": "^12.5.3"
   },
