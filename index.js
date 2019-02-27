@@ -4,14 +4,22 @@ const archy = require('archy')
 
 function noop () { return true }
 
-function UseIt (fn, resource) {
+function UseIt (fn = noop, resource) {
+  if (typeof fn !== 'function') {
+    throw new Error('fn parameter must be a function')
+  }
+
   this.parent = undefined
   this.children = []
   this.resource = resource
-  this.criteria = fn || noop
+  this.criteria = fn
 }
 
 UseIt.prototype.addCriteria = function (fn, resource) {
+  if (typeof fn !== 'function') {
+    throw new Error('fn parameter must be a function')
+  }
+
   const node = new UseIt(fn, resource)
   node.parent = this
   this.children.push(node)
@@ -19,29 +27,98 @@ UseIt.prototype.addCriteria = function (fn, resource) {
 }
 
 UseIt.prototype.addSiblingCriteria = function (fn, resource) {
+  if (this.parent === undefined) {
+    throw new Error('Cannot add sibling on root node')
+  }
   return this.addCriteria.call(this.parent, fn, resource)
 }
 
-UseIt.prototype.depthFirstSearch = function (item) {
-  // TODO
+UseIt.prototype.clear = function () {
+  this.children.forEach(c => { c.parent = undefined })
+  this.children = []
 }
 
-UseIt.prototype.breadthFirstSearch = function (item, opts) {
-  // TODO manage:
-  /*
-    opts.traverseAll: not ignore sub-tree when criteria is false
-  */
+// don't need to remember visited nodes (you can only add node not connect ones)
+UseIt.prototype.depthFirstSearchPreOrder = function (item, opts = {}) {
+  const resourceStack = []
+  preOrder(this)
+  return resourceStack
+
+  function preOrder (node) {
+    const res = node.criteria(item) // TODO manage a promise
+
+    if (res === true && node.resource) {
+      resourceStack.push(node.resource)
+    }
+
+    if (res === true || opts.traverseAll === true) {
+      if (opts.maxResults > 0 && resourceStack.length === opts.maxResults) {
+        return
+      }
+      node.children.forEach(_ => {
+        if (opts.maxResults > 0 && resourceStack.length === opts.maxResults) {
+          return
+        }
+        preOrder(_)
+      })
+    }
+  }
+}
+
+UseIt.prototype.depthFirstSearchPostOrder = function (item, opts = {}) {
+  const resourceStack = []
+  postOrder(this)
+  return resourceStack
+
+  function postOrder (node) {
+    node.children.forEach(_ => {
+      if (opts.maxResults > 0 && resourceStack.length === opts.maxResults) {
+        return
+      }
+      postOrder(_)
+    })
+
+    const res = node.criteria(item) // TODO manage a promise
+
+    if (res === true &&
+      node.resource &&
+      (opts.maxResults === 0 || resourceStack.length < opts.maxResults)) {
+      resourceStack.push(node.resource)
+    }
+  }
+}
+
+UseIt.prototype.depthFirstSearch = function (item, opts = {}) {
+  switch (opts.order) {
+    case 'NLR':
+      return this.depthFirstSearchPreOrder(item, opts)
+    case 'LRN':
+      return this.depthFirstSearchPostOrder(item, opts)
+    // case 'LNR': // ? In-order => cant implement unless to transform general tree in binary tree
+    // case 'RNL': // ? Out-order => same of in-order but the sort is reverted
+    default:
+      throw new Error('Unknown DFS algorithm', opts.order)
+  }
+}
+
+UseIt.prototype.breadthFirstSearch = function (item, opts = {}) {
   const resourceStack = []
   const queue = []
   queue.push(this)
 
   while (queue.length > 0) {
     const node = queue.shift() // ! this is not performant
-    const res = node.criteria(item)
-    if (res === true) { // TODO manage a promise
-      if (node.resource) {
-        resourceStack.push(node.resource)
+    const res = node.criteria(item) // TODO manage a promise
+
+    if (res === true && node.resource) {
+      resourceStack.push(node.resource)
+
+      if (opts.maxResults > 0 && resourceStack.length === opts.maxResults) {
+        break
       }
+    }
+
+    if (res === true || opts.traverseAll === true) {
       node.children.forEach(_ => queue.push(_))
     }
   }
@@ -49,22 +126,46 @@ UseIt.prototype.breadthFirstSearch = function (item, opts) {
   return resourceStack
 }
 
-UseIt.prototype.evaluate = function (item, opts) {
-  // TODO traverse the tree
-  return this
+UseIt.prototype.evaluate = function (item, options) {
+  const opts = cleanOpts(options)
+  switch (opts.algorithm) {
+    case 'BFS':
+      return this.breadthFirstSearch(item, opts)
+    case 'DFS':
+      return this.depthFirstSearch(item, opts)
+    default:
+      throw new Error('Unknown algorithm', opts.algorithm)
+  }
 }
 
-UseIt.prototype.prettyPrint = function (pritty) {
-  const getLabel = pritty || ((criteria, resource = '') => `${criteria.toString()} ${resource}`)
+UseIt.prototype.toJSON = function () {
+  const toJSON = (target, node) => {
+    target.criteria = node.criteria
+    target.resource = node.resource
+    target.nodes = node.children.map(_ => toJSON({}, _))
+    return target
+  }
+  return toJSON({}, this)
+}
+
+UseIt.prototype.prettyPrint = function (pretty) {
+  const getLabel = pretty || ((criteria, resource = '') => `${criteria.toString()} ${resource}`)
 
   const decorateText = (node) => {
     node.label = getLabel(node.criteria, node.resource)
-    if (node.children.length > 0) {
-      node.nodes = node.children.map(_ => decorateText(_))
-    }
+    node.nodes = node.children.map(_ => decorateText(_))
     return node
   }
   console.log(archy(decorateText(Object.assign({}, this))))
+}
+
+function cleanOpts (opts) {
+  return Object.assign({
+    traverseAll: false,
+    maxResults: 0,
+    algorithm: 'BFS',
+    order: 'NLR'
+  }, opts)
 }
 
 module.exports = UseIt

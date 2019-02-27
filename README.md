@@ -9,7 +9,7 @@ In this case you have to write always the same `if` conditions to pick one of th
 
 `use-it` will solve this problem!
 
-### Usage
+## Usage
 
 ```js
 const exampleConfig = {
@@ -41,7 +41,7 @@ const user = {
   external: true
 }
 
-const res = resouceChooser.breadthFirstSearch(user)
+const res = resouceChooser.evaluate(user)
 console.log(res)
 /** It will print out
    [ 
@@ -50,3 +50,23 @@ console.log(res)
    ]
 */
 ```
+
+# API
+
+Default options:
+
+```js
+{
+  traverseAll: false,
+  maxResults: 0, // 0 = disabled
+  algorithm: 'BFS', // [BFS, DFS]
+  order: 'NLR' // when DFS: [NLR, LRN]
+}
+```
+
+## Roadmap
+
+[] Docs
+[] Emit events `onAdd`, `onFind`, `onMax`, `onEnd`
+[] Manage Primise Criteria
+[] Performance
