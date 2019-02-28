@@ -5,6 +5,20 @@ const ChooseIt = require('../')
 const h = require('./helper')
 const test = t.test
 
+test('call directly breadthFirstSearch method without options', t => {
+  t.plan(1)
+  const tree = h.buildTestTree(new ChooseIt())
+  const result = tree.breadthFirstSearch(1)
+  t.deepEqual(result, [1, 9])
+})
+
+test('call directly breadthFirstSearch method with options', t => {
+  t.plan(1)
+  const tree = h.buildTestTree(new ChooseIt())
+  const result = tree.breadthFirstSearch(1, { maxResults: -1 })
+  t.deepEqual(result, [1, 9])
+})
+
 test('evalutation with default parameters', t => {
   t.plan(1)
   const tree = h.buildTestTree(new ChooseIt())

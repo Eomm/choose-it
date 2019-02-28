@@ -2,3 +2,4 @@ test/
 .nyc_output/
 prova.js
 .coveralls.yml
+docs/

@@ -82,7 +82,7 @@ ChooseIt.prototype.depthFirstSearchPostOrder = function (item, opts = {}) {
 
     if (res === true &&
       node.resource &&
-      (opts.maxResults === 0 || resourceStack.length < opts.maxResults)) {
+      (!opts.maxResults || resourceStack.length < opts.maxResults)) {
       resourceStack.push(node.resource)
     }
   }
