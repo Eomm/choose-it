@@ -94,7 +94,7 @@ test('toJSON must return a simple tree', t => {
       {
         criteria: 'i == 0',
         resource: 0,
-        nodes: [{ criteria: 'i <= 0', resource: -10, nodes: [] }]
+        nodes: [{ criteria: 'i <= -10', resource: -10, nodes: [] }]
       },
       {
         criteria: 'i > 0',

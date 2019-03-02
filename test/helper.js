@@ -12,7 +12,7 @@ function buildTestTree (rootNode) {
     .addSiblingCriteria(buildNamedFunction('>', -5), -4)
 
   rootNode.addCriteria(buildNamedFunction('==', 0), 0)
-    .addCriteria(buildNamedFunction('<=', -0), -10)
+    .addCriteria(buildNamedFunction('<=', -10), -10)
 
   const node = rootNode.addCriteria(buildNamedFunction('>', 0), 1)
     .addCriteria(buildNamedFunction('>', 10), 10)

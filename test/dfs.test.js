@@ -77,7 +77,7 @@ test('evalutation with traverseAll true and maxResults - preorder', t => {
   t.deepEqual(result, [-4, 1])
 })
 
-test('evalutation with traverseAll true and maxResults - preorder', t => {
+test('evalutation with maxResults - preorder', t => {
   t.plan(1)
   const tree = h.buildTestTree(new ChooseIt())
   const result = tree.evaluate(11, { algorithm: 'DFS', traverseAll: false, maxResults: 2 })

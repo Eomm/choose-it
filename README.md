@@ -1,6 +1,7 @@
 # choose-it
 
 [![Coverage Status](https://coveralls.io/repos/github/Eomm/choose-it/badge.svg?branch=master)](https://coveralls.io/github/Eomm/choose-it?branch=master)
+[![Build Status](https://travis-ci.com/Eomm/choose-it.svg?branch=master)](https://travis-ci.com/Eomm/choose-it)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 This module let you focus on the business logic instead of going crazy in a `if/else` jungle 🐵🌴🌴
@@ -11,6 +12,14 @@ or simply some settings you need to use based on some logic of your company.
 In this case you have to write always the same `if` conditions to pick one of those resources.
 
 `choose-it` will solve this problem!
+
+It implement a generic tree where each node is a `Criteria` where you can attach optionally a `Resouce`.
+If the criteria return `true` the resource is returned if any.
+You can build a series of `Criteria` with many branches as you want!
+
+![Generic Tree](./docs/tree.png)
+
+*This tree is build in our tests!
 
 
 ## Installation
@@ -48,20 +57,29 @@ resouceChooser.addCriteria((item) => item.admin === true, exampleConfig.admin)
 resouceChooser.addCriteria((item) => item.guest === true, exampleConfig.guest)
   .addCriteria((item) => item.external === true, exampleConfig.external)
 
+// Assign a node to a variable to use it later
+const myNode = resouceChooser.addCriteria((item) => item.power === false, { noPower: true })
+
+// Add a sibling node. You can't call this method on the root node!
+myNode.addSiblingCriteria((item) => item.power === true, { gotThePower: true })
+
 // View your tree
 resouceChooser.prettyPrint()
 // function noop () { return true }
 // ├── (item) => item.admin === true [object Object]
-// └─┬ (item) => item.guest === true [object Object]
-//   └── (item) => item.external === true [object Object]
-
+// ├─┬ (item) => item.guest === true [object Object]
+// │ └── (item) => item.external === true [object Object]
+// ├── (item) => item.power === false [object Object]
+// └── (item) => item.power === true [object Object]
 
 // View your tree with a custom output
-resouceChooser.prettyPrint((criteria, resource = {}) => `${criteria.toString()} = Resource [${resource.viewAll}]`)
-// function noop () { return true } = undefined
-// ├── (item) => item.admin === true = true
-// └─┬ (item) => item.guest === true = false
-//   └── (item) => item.external === true = false
+resouceChooser.prettyPrint((criteria, resource = '') => `${criteria.toString()} = Resource [${resource.viewAll}]`)
+// function noop () { return true } = Resource [undefined]
+// ├── (item) => item.admin === true = Resource [true]
+// ├─┬ (item) => item.guest === true = Resource [false]
+// │ └── (item) => item.external === true = Resource [false]
+// ├── (item) => item.power === false = Resource [undefined]
+// └── (item) => item.power === true = Resource [undefined]
 
 const user = {
   guest: true,
@@ -76,14 +94,28 @@ console.log(res)
     { viewAll: false, login: 'http://external.login.log' }
   ]
 */
+
+const needOnlyOne = resouceChooser.evaluate(user, { maxResults: 1 })
+console.log(needOnlyOne)
+/** It will print out:
+ * [ { viewAll: false, login: 'http://login.log' } ]
+ */
+
 ```
 
 
 # API
 
-Choose-it implement a Generic Tree under the hood that you can visualize like this:
+You have seen all the API in action the "Usage" paragraph.
 
-![Tree Image](https://mermaidjs.github.io/mermaid-live-editor/#/view/eyJjb2RlIjoiZ3JhcGggVEQ7XG5ST09UKChSb290KSktLT5BKChpPDApKTtcblJPT1QtLT5CKChpPT0wKSk7XG5ST09ULS0-QygoaT4wKSk7XG5BLS0-QTEoKGk8LTUpKTtcbkEtLT5BMigoaT4tNSkpO1xuQi0tPkIxKChpPD0xMCkpO1xuQy0tPkMxKChpPjEwKSk7XG5DLS0-QzIoKGk8MTApKTtcbkMtLT5DMygoaT4xMDApKTtcbkMxLS0-QzExKChpPjYpKTsiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ)
+We need only to go deeper on `evaluate` options 👍
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `traverseAll` | `false` | If you have a branch like `C1-->C2-->C3` if `traverseAll` is true, even if C2 fail, C3 will be evaluated and could return his resource (if it will be a valid criteria of course). `traverseAll = false` will stop the execution of the branch whenever a falsy criteria is found |
+| `maxResults` | 0 | Limit the output length. 0 means "no limit" |
+| `algorithm` | `BFS` | You can choose between two main tree traverse algorithm: Breadth First-Search and Depth First-Search |
+| `order` | `NLR` | This param set the Depth First-Search to be Pre-Order (NLR) or Post-Order (LRN). The `traverseAll` parameter is ignored by the Post-Order traversal |
 
 Default options:
 
@@ -92,17 +124,20 @@ Default options:
   traverseAll: false,
   maxResults: 0, // 0 = disabled
   algorithm: 'BFS', // [BFS, DFS]
-  order: 'NLR' // when DFS: [NLR, LRN]
+  order: 'NLR' // used only when algorithm = DFS: [NLR, LRN]
 }
 ```
 
 
 ## Roadmap
 
-⬜ Docs
-
 ⬜ Emit events `onAdd`, `onFind`, `onMax`, `onEnd`
 
 ⬜ Manage Promise in Criteria
 
 ⬜ Performance
+
+
+## License
+
+Copyright [Manuel Spigolon](https://github.com/Eomm), Licensed under [MIT](./LICENSE).
