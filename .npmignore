@@ -3,3 +3,4 @@ test/
 prova.js
 .coveralls.yml
 docs/
+.travis.yml

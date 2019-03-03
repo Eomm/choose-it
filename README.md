@@ -3,23 +3,25 @@
 [![Coverage Status](https://coveralls.io/repos/github/Eomm/choose-it/badge.svg?branch=master)](https://coveralls.io/github/Eomm/choose-it?branch=master)
 [![Build Status](https://travis-ci.com/Eomm/choose-it.svg?branch=master)](https://travis-ci.com/Eomm/choose-it)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![install size](https://packagephobia.now.sh/badge?p=choose-it)](https://packagephobia.now.sh/result?p=choose-it)
 
-This module let you focus on the business logic instead of going crazy in a `if/else` jungle 🐵🌴🌴
+This module let you focus on the business logic instead of going crazy in a `if/else` jungle 🌴🐵🌴🌴
+
+It implements a generic tree where each node is a `Criteria` and you can attach optionally a `Resouce`.
+When you need the resource, you will evaluate the tree criterias and if the criteria return `true`
+the resource is returned. You can build a series of `Criteria` with many branches as you want!
 
 An example use case is when you have a set of databases connections that are not configured as cluster,
-or simply some settings you need to use based on some logic of your company.
+and you have to choose one base on some filters, or simply there are settings you need to use
+based on some boolean of your company crazy configuration!
 
-In this case you have to write always the same `if` conditions to pick one of those resources.
+In these cases you have to write always the same `if/else` conditions to pick one of those resources.
 
-`choose-it` will solve this problem!
-
-It implement a generic tree where each node is a `Criteria` where you can attach optionally a `Resouce`.
-If the criteria return `true` the resource is returned if any.
-You can build a series of `Criteria` with many branches as you want!
+`choose-it` will solve this problem: build the tree, grab the resource 🎉
 
 ![Generic Tree](./docs/tree.png)
 
-*This tree is build in our tests!
+*This tree is built in our tests!
 
 
 ## Installation
@@ -106,25 +108,25 @@ console.log(needOnlyOne)
 
 # API
 
-You have seen all the API in action the "Usage" paragraph.
+You have seen all the API in action in the "Usage" paragraph.
 
 We need only to go deeper on `evaluate` options 👍
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `traverseAll` | `false` | If you have a branch like `C1-->C2-->C3` if `traverseAll` is true, even if C2 fail, C3 will be evaluated and could return his resource (if it will be a valid criteria of course). `traverseAll = false` will stop the execution of the branch whenever a falsy criteria is found |
+| `traverseAll` | `false` | If you have a branch like `C1-->C2-->C3` if `traverseAll` is true, even if C2 fail, C3 will be evaluated and could return its resource (if it will be valid criteria of course). `traverseAll = false` will stop the execution of the branch whenever a falsy criteria is found |
 | `maxResults` | 0 | Limit the output length. 0 means "no limit" |
-| `algorithm` | `BFS` | You can choose between two main tree traverse algorithm: Breadth First-Search and Depth First-Search |
+| `algorithm` | `BFS` | You can choose between two main traverse tree algorithm: Breadth First-Search and Depth First-Search |
 | `order` | `NLR` | This param set the Depth First-Search to be Pre-Order (NLR) or Post-Order (LRN). The `traverseAll` parameter is ignored by the Post-Order traversal |
 
-Default options:
+Copy-Paste default options:
 
 ```js
 {
   traverseAll: false,
   maxResults: 0, // 0 = disabled
   algorithm: 'BFS', // [BFS, DFS]
-  order: 'NLR' // used only when algorithm = DFS: [NLR, LRN]
+  order: 'NLR' // [NLR, LRN]
 }
 ```
 
