@@ -5,11 +5,11 @@ const ChooseIt = require('../')
 const h = require('./helper')
 const test = t.test
 
-test('new UseIt error', t => {
-  t.plan(4);
+test('new choose-it error', t => {
+  t.plan(5);
 
-  [null, undefined, 'str', 42].forEach(e => {
-    t.throws(() => ChooseIt(e), 'new UseIt must accept only functions')
+  [null, undefined, 'str', 42, true].forEach(e => {
+    t.throws(() => ChooseIt(e), 'new choose-it must accept only functions')
   })
 })
 

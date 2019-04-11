@@ -23,6 +23,11 @@ In these cases you have to write always the same `if/else` conditions to pick on
 
 *This tree is built in our tests!
 
+### Graph
+
+The version `1.1.x` of `choose-it` introduces Weighted Directed Graph that you can traverse with Dijkstra!
+
+![wdg](./docs/wdg.png)
 
 ## Installation
 
@@ -132,6 +137,8 @@ Copy-Paste default options:
 
 
 ## Roadmap
+
+⬜ Bellman-Ford to traverse negative weights
 
 ⬜ Emit events `onAdd`, `onFind`, `onMax`, `onEnd`
 

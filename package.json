@@ -4,8 +4,8 @@
   "description": "Choose a resource in a Jungle 🌴🌴🌴 tree",
   "main": "index.js",
   "scripts": {
-    "test": "standard && tap --coverage test/**/*.test.js",
-    "coveralls": "tap --coverage-report=text-lcov | node ./node_modules/coveralls/bin/coveralls.js",
+    "test": "standard && tap --coverage test/*.test.js",
+    "coveralls": "tap --coverage-report=text-lcov test/**/*.test.js | node ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "npm test && npm run coveralls"
   },
   "repository": {
@@ -34,7 +34,7 @@
     "coveralls": "^3.0.3",
     "pre-commit": "^1.2.2",
     "standard": "^12.0.1",
-    "tap": "^12.5.3"
+    "tap": "^12.6.1"
   },
   "dependencies": {
     "archy": "^1.0.0"

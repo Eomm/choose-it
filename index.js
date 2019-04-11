@@ -11,7 +11,14 @@ function ChooseIt (fn = noop, resource) {
 
   this.parent = undefined
   this.children = []
-  this.resource = resource
+
+  if (resource && resource.resource && resource.weight >= 0) {
+    this.resource = resource.resource
+    this.weight = resource.weight
+  } else {
+    this.resource = resource
+    this.weight = Number.POSITIVE_INFINITY
+  }
   this.criteria = fn
 }
 
