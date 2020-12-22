@@ -1,7 +1,7 @@
 # choose-it
 
 [![Coverage Status](https://coveralls.io/repos/github/Eomm/choose-it/badge.svg?branch=master)](https://coveralls.io/github/Eomm/choose-it?branch=master)
-[![Build Status](https://travis-ci.com/Eomm/choose-it.svg?branch=master)](https://travis-ci.com/Eomm/choose-it)
+[![Build Status](https://github.com/Eomm/choose-it/workflows/ci/badge.svg)](https://github.com/Eomm/choose-it/actions)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![install size](https://packagephobia.now.sh/badge?p=choose-it)](https://packagephobia.now.sh/result?p=choose-it)
 
