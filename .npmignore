@@ -4,3 +4,5 @@ prova.js
 .coveralls.yml
 docs/
 .travis.yml
+.vscode/
+.github/

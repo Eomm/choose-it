@@ -74,7 +74,7 @@ test('Example in README must works', t => {
    * [ { viewAll: false, login: 'http://login.log' } ]
    */
 
-  t.deepEquals(res, [
+  t.strictSame(res, [
     { viewAll: false, login: 'http://login.log' },
     { viewAll: false, login: 'http://external.login.log' }
   ])
