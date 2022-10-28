@@ -4,10 +4,9 @@
   "description": "Choose a resource in a Jungle 🌴🌴🌴 tree",
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "standard && tap --coverage test/**/*.test.js",
-    "coveralls": "tap --coverage-report=text-lcov | node ./node_modules/coveralls/bin/coveralls.js",
-    "coverage": "npm test && npm run coveralls"
+    "test": "tap test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -32,10 +31,9 @@
   },
   "homepage": "https://github.com/Eomm/choose-it#readme",
   "devDependencies": {
-    "coveralls": "^3.1.0",
     "pre-commit": "^1.2.2",
-    "standard": "^16.0.3",
-    "tap": "^12.7.0"
+    "standard": "^17.0.0",
+    "tap": "^16.3.0"
   },
   "dependencies": {
     "archy": "^1.0.0"

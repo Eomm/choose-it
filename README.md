@@ -1,6 +1,5 @@
 # choose-it
 
-[![Coverage Status](https://coveralls.io/repos/github/Eomm/choose-it/badge.svg?branch=master)](https://coveralls.io/github/Eomm/choose-it?branch=master)
 [![Build Status](https://github.com/Eomm/choose-it/workflows/ci/badge.svg)](https://github.com/Eomm/choose-it/actions)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![install size](https://packagephobia.now.sh/badge?p=choose-it)](https://packagephobia.now.sh/result?p=choose-it)
@@ -19,7 +18,19 @@ In these cases you have to write always the same `if/else` conditions to pick on
 
 `choose-it` will solve this problem: build the tree, grab the resource 🎉
 
-![Generic Tree](./docs/tree.png)
+```mermaid
+graph TD;
+  ROOT((Root))-->A((i<0 R:-1));
+  ROOT-->B((i==0 R: 0));
+  ROOT-->C((i>0 R: 1));
+  A-->A1((i<-5 R: -5));
+  A-->A2((i>-5 R: -4));
+  B-->B1((i<=10 R: -10));
+  C-->C1((i>10 R: 10));
+  C-->C2((i<10 R: 9));
+  C-->C3((i>99 R: 100));
+  C1-->C11((i>6 R: 7));
+```
 
 *This tree is built in our tests!
 
@@ -133,11 +144,9 @@ Copy-Paste default options:
 
 ## Roadmap
 
-⬜ Emit events `onAdd`, `onFind`, `onMax`, `onEnd`
-
-⬜ Manage Promise in Criteria
-
-⬜ Performance
+- [ ] Emit events `onAdd`, `onFind`, `onMax`, `onEnd`
+- [ ] Manage Promise in Criteria
+- [ ] Performance assessment
 
 
 ## License

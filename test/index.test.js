@@ -28,9 +28,9 @@ test('addCriteria chain', t => {
     .addCriteria(() => true)
     .addCriteria(() => true)
 
-  t.equals(use.children.length, 1)
-  t.equals(use.children[0].children.length, 1)
-  t.equals(use.children[0].children[0].children.length, 1)
+  t.equal(use.children.length, 1)
+  t.equal(use.children[0].children.length, 1)
+  t.equal(use.children[0].children[0].children.length, 1)
 })
 
 test('addCriteria error', t => {
@@ -61,10 +61,10 @@ test('addSiblingCriteria chain', t => {
     .addSiblingCriteria(() => true)
     .addCriteria(() => true)
 
-  t.equals(use.children.length, 2)
-  t.equals(use.children[0].children.length, 0)
-  t.equals(use.children[1].children.length, 1)
-  t.equals(use.children[1].children[0].children.length, 0)
+  t.equal(use.children.length, 2)
+  t.equal(use.children[0].children.length, 0)
+  t.equal(use.children[1].children.length, 1)
+  t.equal(use.children[1].children[0].children.length, 0)
 })
 
 test('addSiblingCriteria on root', t => {
@@ -112,7 +112,7 @@ test('toJSON must return a simple tree', t => {
     ]
   }
 
-  t.like(tree.toJSON(), simpleTree)
+  t.match(tree.toJSON(), simpleTree)
 })
 
 test('clear', t => {
@@ -120,13 +120,13 @@ test('clear', t => {
   const use = new ChooseIt()
   const child = use.addCriteria(() => true)
 
-  t.equals(use.children.length, 1)
-  t.equals(child.parent, use)
+  t.equal(use.children.length, 1)
+  t.equal(child.parent, use)
 
   use.clear()
 
-  t.equals(use.children.length, 0)
-  t.equals(child.parent, undefined)
+  t.equal(use.children.length, 0)
+  t.equal(child.parent, undefined)
 })
 
 test('evaluate with wrong algorithm settings', t => {
