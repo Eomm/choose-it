@@ -1,6 +1,6 @@
 {
   "name": "choose-it",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Choose a resource in a Jungle 🌴🌴🌴 tree",
   "main": "index.js",
   "scripts": {
