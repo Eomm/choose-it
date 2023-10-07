@@ -6,14 +6,14 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "tap test/**/*.test.js"
+    "test": "tap run test/*.test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Eomm/choose-it.git"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=16"
   },
   "keywords": [
     "resource",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "pre-commit": "^1.2.2",
     "standard": "^17.0.0",
-    "tap": "^16.3.0"
+    "tap": "^18.4.3"
   },
   "dependencies": {
     "archy": "^1.0.0"
