@@ -6,14 +6,14 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "tap test/**/*.test.js"
+    "test": "tap run test/*.test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Eomm/choose-it.git"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=16"
   },
   "keywords": [
     "resource",
