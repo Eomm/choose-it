@@ -34,7 +34,7 @@
   "devDependencies": {
     "pre-commit": "^1.2.2",
     "standard": "^17.0.0",
-    "tap": "^20.0.0"
+    "tap": "^21.0.0"
   },
   "dependencies": {
     "archy": "^1.0.0"
