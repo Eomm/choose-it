@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/Eomm/choose-it#readme",
   "devDependencies": {
-    "pre-commit": "^1.2.2",
+    "pre-commit": "^2.0.0",
     "standard": "^17.0.0",
     "tap": "^21.0.0"
   },
